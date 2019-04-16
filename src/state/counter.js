@@ -2,7 +2,6 @@ const INC = 'counter/INC'
 
 export const incActionCreator = () => ({
     type: INC,
-
 })
 
 const initialState = {

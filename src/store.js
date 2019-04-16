@@ -4,7 +4,6 @@ import counter, { incActionCreator } from './state/counter'
 
 const rootReducer = combineReducers({
     counter
-
 })
 
 export const store = createStore(
@@ -12,4 +11,4 @@ export const store = createStore(
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 )
 
-store.dispatch(incActionCreator())
+window.inc = () => store.dispatch(incActionCreator())
