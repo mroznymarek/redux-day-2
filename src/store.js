@@ -1,9 +1,11 @@
 import { createStore, combineReducers } from 'redux'
 
 import counter, { incActionCreator } from './state/counter'
+import toDo, { addActionCreator } from './state/toDo'
 
 const rootReducer = combineReducers({
-    counter
+    counter,
+    toDo,
 })
 
 export const store = createStore(
@@ -12,3 +14,5 @@ export const store = createStore(
 )
 
 window.inc = () => store.dispatch(incActionCreator())
+
+window.inc = (text) => store.dispatch(addActionCreator(text))
