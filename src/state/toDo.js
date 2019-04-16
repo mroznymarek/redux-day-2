@@ -27,6 +27,7 @@ export default (state = initialState, action) => {
         case ADD:
             return {
                 ...state,
+                newTaskText: '',
                 tasks: state.tasks.concat({
                     text: state.newTaskText,
                     key: uuidv1(),
