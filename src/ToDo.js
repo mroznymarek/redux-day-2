@@ -1,53 +1,48 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { addActionCreator, deleteActionCreator } from './state/toDo'
+import { addActionCreator, deleteActionCreator, newTaskChangedActionCreator } from './state/toDo'
 
 
-class ToDo extends React.Component {
-    state = {
-        newTaskText: ''
-    }
+const ToDo = (props) => (
 
-    render() {
-        return (
-            <div>
-                <input
-                    value={this.state.newTaskText}
-                    onChange={event => this.setState({
-                        newTaskText: event.target.value,
-                    })}
-                />
-                <button
-                    onClick={() => this.props._addTask(this.state.newTaskText)}
-                >
-                    DODAJ
+    <div>
+        <input
+            value={props._newTaskText}
+            onChange={event => props._taskTextChanged(event.target.value)}
+        />
+        <button
+            onClick={props._addTask}
+        >
+            DODAJ
                 </button>
-                <ul>
-                    {
-                        this.props._tasks.map(
-                            (task, i) => (
-                                <li 
-                                    key={task.key}
-                                    onClick={() => this.props._deleteTask(task.key)}
-                                >
-                                    {task.text}
-                                </li>
-                            )
-                        )
-                    }
-                </ul>
-            </div>
-        )
-    }
-}
+        <ul>
+            {
+                props._tasks.map(
+                    (task, i) => (
+                        <li
+                            key={task.key}
+                            onClick={() => props._deleteTask(task.key)}
+                        >
+                            {task.text}
+                        </li>
+                    )
+                )
+            }
+        </ul>
+    </div>
+)
+
 
 const mapStateToProps = state => ({
-    _tasks: state.toDo.tasks
+    _tasks: state.toDo.tasks,
+    _newTaskText: state.toDo.newTaskText
 })
 
 const mapDispatchToProps = dispatch => ({
-    _addTask: (newTaskText) => dispatch(addActionCreator(newTaskText)),
+    _addTask: () => dispatch(addActionCreator()),
     _deleteTask: (taskKey) => dispatch(deleteActionCreator(taskKey)),
+    _taskTextChanged: (newTaskText) => dispatch(newTaskChangedActionCreator(newTaskText)),
+
 })
 
 export default connect(
