@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {addActionCreator} from './state/toDo'
+import { addActionCreator, deleteActionCreator } from './state/toDo'
 
 
 class ToDo extends React.Component {
@@ -18,12 +18,22 @@ class ToDo extends React.Component {
                     })}
                 />
                 <button
-                    onClick={() => this.props.addTask(this.state.newTaskText)}
+                    onClick={() => this.props._addTask(this.state.newTaskText)}
                 >
                     DODAJ
                 </button>
                 <ul>
                     {
+                        this.props._tasks.map(
+                            (task, i) => (
+                                <li 
+                                    key={task.key}
+                                    onClick={() => this.props._deleteTask(task.key)}
+                                >
+                                    {task.text}
+                                </li>
+                            )
+                        )
                     }
                 </ul>
             </div>
@@ -32,11 +42,12 @@ class ToDo extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    _newTaskText: state.toDo.newTaskText
+    _tasks: state.toDo.tasks
 })
 
 const mapDispatchToProps = dispatch => ({
-    _addTask: (newTaskText) => dispatch(addActionCreator(newTaskText))
+    _addTask: (newTaskText) => dispatch(addActionCreator(newTaskText)),
+    _deleteTask: (taskKey) => dispatch(deleteActionCreator(taskKey)),
 })
 
 export default connect(
